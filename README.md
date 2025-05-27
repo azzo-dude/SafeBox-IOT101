@@ -1,1 +1,1 @@
-God is Good!
+God is the Greatest
