@@ -16,12 +16,22 @@ A custom Arduino library providing easy-to-use classes for controlling LEDs, buz
 
 ## Installation
 
-1. Copy `IO.h` and `IO.cpp` into your Arduino project's folder or library directory.
-2. Make sure you have the following dependencies installed via Library Manager:
-   - [Keypad](https://github.com/Chris--A/Keypad)
-   - [LiquidCrystal_I2C](https://github.com/johnrickman/LiquidCrystal_I2C)
+### Method 1: Add Library via .zip
 
----
+1. Download or clone this repository, or simply download the `IO.h` and `IO.cpp` files and place them in a folder named `AllahuAkbar`.
+2. Compress the folder into a `.zip` file (e.g., `AllahuAkbar.zip`).
+3. In the Arduino IDE, go to **Sketch > Include Library > Add .ZIP Library...**
+4. Select your `AllahuAkbar.zip` file.
+5. The library will now be available for use in your Arduino projects.
+
+### Method 2: Manual Installation
+
+1. Copy `IO.h` and `IO.cpp` into your Arduino project's folder or into `Documents/Arduino/libraries/AllahuAkbar`.
+
+### Dependencies
+
+- [Keypad](https://github.com/Chris--A/Keypad)
+- [LiquidCrystal_I2C](https://github.com/johnrickman/LiquidCrystal_I2C)
 
 ## Usage Example
 
