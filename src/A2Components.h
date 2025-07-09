@@ -33,7 +33,11 @@ class Led {
       unsigned long currentMillis = millis();
       if (currentMillis - previousMillis >= ms) {
         ledState = !ledState;
-        digitalWrite(_pin, ledState ? HIGH : LOW);
+        if (ledState) {
+          on();
+        } else {
+          off();
+        }
         previousMillis = currentMillis;
       }
     }
