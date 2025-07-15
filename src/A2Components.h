@@ -1,3 +1,6 @@
+#ifndef COMPONENTS_H
+#define COMPONENTS_H
+
 class Led {
   private:
     uint8_t _pin;
