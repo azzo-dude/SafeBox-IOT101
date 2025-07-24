@@ -99,25 +99,24 @@ All pin connections are defined in the `SafeBoxConfig.h` file. Connect the compo
 
     // --- Pin Definitions ---
     // LEDs & Buzzer
-    #define GREEN_LED_PIN 25
-    #define RED_LED_PIN 26
-    #define BUZZER_PIN 27
-    #define SERVO_PIN 13
+    #define GREEN_LED_PIN 23
+    #define RED_LED_PIN 19
+    #define BUZZER_PIN 5
+    #define SERVO_PIN 4
 
-    // Fingerprint Sensor (Using Serial2)
-    #define FINGERPRINT_RX 14 // ESP32 RX2
-    #define FINGERPRINT_TX 12 // ESP32 TX2
+    #define FINGERPRINT_RX 16
+    #define FINGERPRINT_TX 12
 
     // Keypad
     #define KEYPAD_R1 32
     #define KEYPAD_R2 33
-    #define KEYPAD_R3 15
-    #define KEYPAD_R4 4
-    #define KEYPAD_C1 16
-    #define KEYPAD_C2 17
-    #define KEYPAD_C3 18
-    #define KEYPAD_C4 19
-
+    #define KEYPAD_R3 25
+    #define KEYPAD_R4 26
+    #define KEYPAD_C1 27
+    #define KEYPAD_C2 14
+    #define KEYPAD_C3 12
+    #define KEYPAD_C4 13
+    
     #endif
     ```
 
