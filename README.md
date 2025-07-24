@@ -176,5 +176,6 @@ The code is structured around a state machine managed by the `SystemState` enum.
 * **Web Page Not Loading:** Ensure your device is connected to the correct "SafeBox_Config" Wi-Fi network and that you are navigating to the correct IP address (`192.168.4.1`).
 * **Password Not Saving:** Check the serial monitor for any EEPROM-related errors. Ensure `EEPROM.begin()` is called correctly.
 * **Servo Not Turning:** Verify the servo has power (5V) and that the signal pin is connected correctly to the ESP32. Check the `SERVO_LOCKED_ANGLE` and `SERVO_UNLOCKED_ANGLE` values.
+
 📄 License
 MIT License — feel free to use, modify, and distribute.
