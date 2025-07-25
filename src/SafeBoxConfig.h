@@ -1,44 +1,54 @@
-#ifndef SAFEBOX_CONFIG_H
-#define SAFEBOX_CONFIG_H
+#ifndef CONFIG_H
+#define CONFIG_H
 
-// Defines cho số lần thử mật khẩu và thời gian khóa (lưu vào EEPROM cho mật khẩu, lock time dựa trên millis)
-#define MAX_ATTEMPTS 3
-#define LOCK_TIME 300000UL  // 5 minutes in milliseconds)
+#include <Arduino.h>
 
-// Mật khẩu mặc định và độ dài tối đa (mật khẩu có thể biến, nhưng giới hạn để lưu trữ)
+// --- Wi-Fi Access Point Settings ---
+#define AP_SSID "SafeBox_Config"
+#define AP_PASS "12345678"
+
+// --- Hardware Pin Definitions (ESP32 30-Pin) ---
+
+// Keypad Pins
+#define KEYPAD_R1 32
+#define KEYPAD_R2 33
+#define KEYPAD_R3 25
+#define KEYPAD_R4 26
+#define KEYPAD_C1 27
+#define KEYPAD_C2 14
+#define KEYPAD_C3 12
+#define KEYPAD_C4 13
+
+// I2C Pins for LCD
+#define LCD_SDA 21
+#define LCD_SCL 22
+
+// Component Pins
+#define SERVO_PIN 4
+#define GREEN_LED_PIN 23
+#define RED_LED_PIN 19
+#define BUZZER_PIN 5
+
+// Fingerprint Sensor Pins (using Serial2)
+// Connect sensor's TX to ESP32's RX2 (GPIO 16 is default, but we use KEYPAD_C1)
+// Connect sensor's RX to ESP32's TX2 (GPIO 17 is default, but we use KEYPAD_R4)
+// IMPORTANT: The fingerprint sensor and keypad share some default pins.
+// We've already assigned pins, so we just need to make sure Serial2 uses them.
+// We will define Serial2 on pins 32(RX) and 33(TX) to avoid conflicts.
+#define FINGERPRINT_RX 16
+#define FINGERPRINT_TX 17
+
+// --- Security & Timing Settings ---
 #define DEFAULT_PASSWORD "1234"
-#define MAX_PASSWORD_LENGTH 10  // Giới hạn để lưu EEPROM
+#define MAX_PASSWORD_LENGTH 8
+#define MAX_ATTEMPTS 3
+#define LOCK_TIME 30000 // 30 seconds lockout time
 
-// Defines cho WiFi config mode
-#define AP_SSID "SafeBoxConfig"
-#define AP_PASS "admin1234"  // Password for AP, can be changed in config if needed
+// --- Servo Settings ---
+#define SERVO_LOCKED_ANGLE 180
+#define SERVO_UNLOCKED_ANGLE 0
 
-// Defines cho serial communication commands (protocol đơn giản giữa master và slave)
-#define CMD_OPEN_SERVO "OPEN_SERVO"
-#define CMD_CLOSE_SERVO "CLOSE_SERVO"
-#define CMD_BLINK_RED "BLINK_RED"
-#define CMD_BLINK_GREEN "BLINK_GREEN"
-#define CMD_BEEP_SUCCESS "BEEP_SUCCESS"
-#define CMD_BEEP_ERROR "BEEP_ERROR"
-#define CMD_VERIFY_RFID "VERIFY_RFID"
-#define CMD_VERIFY_FINGER "VERIFY_FINGER"
-#define CMD_ENROLL_RFID "ENROLL_RFID"
-#define CMD_ENROLL_FINGER "ENROLL_FINGER"
-#define RSP_OK "YES"
-#define RSP_FAIL "NO"
-#define STATUS_PREFIX "MSG_"  // Prefix for status messages from slave (e.g., "MSG_PLACE_FINGER")
+// --- Fingerprint Settings ---
+#define MAX_FINGERPRINTS 2 // Maximum number of fingerprints to store
 
-// EEPROM addresses for master (ESP32)
-#define EEPROM_SIZE 512
-#define ADDR_ENABLE_RFID 0
-#define ADDR_ENABLE_FINGER 1
-#define ADDR_PASSWORD_LEN 2
-#define ADDR_PASSWORD 3  // Starting address for password
-
-// For slave (Arduino)
-#define ADDR_UID_RFID 0  // 4 bytes for UID
-
-// Dev mode
-#define DEBUG_MODE TRUE
-
-#endif // SAFEBOX_CONFIG_H
+#endif // CONFIG_H
