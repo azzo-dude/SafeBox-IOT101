@@ -7,7 +7,7 @@
 #include <LiquidCrystal_I2C.h>
 #include <ESP32Servo.h>
 #include <Adafruit_Fingerprint.h>
-#include <EEPROM.h> // Use EEPROM for password storage
+#include <EEPROM.h>
 #include "SafeBoxConfig.h"
 
 // =================================================================
@@ -58,9 +58,6 @@ bool isApOn = false;
 // =================================================================
 //                      FUNCTION FORWARD DECLARATIONS
 // =================================================================
-// By declaring the functions here, we can call them from anywhere in the code
-// without worrying about the order they are defined in.
-
 void beep(int duration_ms);
 void updateLcd(String line1, String line2);
 void savePassword();
@@ -240,11 +237,11 @@ void grantAccess() {
         if (key) {
             if (key == '#') {
                 beep(100);
-                break; // Khóa két
+                break;
             } else if (key == 'C') {
                 beep(100);
                 Serial.println("[ACCESS] 'C' pressed. Entering config menu.");
-                enterConfigMenu(); // Gọi menu cấu hình
+                enterConfigMenu();
                 updateLcd("Press # to Lock", "");
                 startTime = millis(); // Reset timeout
             } else if (key == 'D') {
@@ -316,7 +313,6 @@ void denyAccess() {
 void checkPassword() {
     Serial.printf("[AUTH] Checking password. Input: '%s', Stored: '%s'\n", inputBuffer.c_str(), password.c_str());
     if (inputBuffer == DEFAULT_PASSWORD) {
-        // FIX: Was calling checkPassword() recursively. Should call grantAccess().
         grantAccess();
     } else {
         denyAccess();
@@ -344,14 +340,12 @@ void handleKeypadInput(char key) {
             updateLcd("SafeBox Ready", "Pass or Fngr");
             return;
 
-        // Các phím chức năng bị vô hiệu hóa ở trạng thái ngoài
         case 'A': case 'B': case 'C': case 'D':
             Serial.printf("[KEYPAD] Key '%c' ignored. Access not granted yet.\n", key);
-            beep(50); // Cho feedback nhưng không làm gì cả
+            beep(50);
             return;
     }
 
-    // Nếu là số/char thì lưu lại để kiểm tra mật khẩu
     if (inputBuffer.length() < MAX_PASSWORD_LENGTH && (isdigit(key) || isalpha(key))) {
         inputBuffer += key;
         lcd.setCursor(inputBuffer.length() - 1, 1);
@@ -362,7 +356,6 @@ void handleKeypadInput(char key) {
 
 
 void handleApModeKeypad() {
-    // Only listen for the 'A' key to exit AP mode
     char key = keypad.getKey();
     if (key == 'A') {
         Serial.println("[AP_MODE] 'A' key pressed. Deactivating AP mode.");
@@ -382,17 +375,16 @@ void toggleApMode() {
     if (isApOn) {
         Serial.println("[WIFI] Starting Access Point...");
 
-        WiFi.disconnect(true); // Ngắt kết nối WiFi hiện tại
+        WiFi.disconnect(true);
         delay(100);
 
         WiFi.softAP(AP_SSID, AP_PASS);
-        delay(200); // Đảm bảo AP khởi tạo xong
+        delay(200);
 
         IPAddress ip = WiFi.softAPIP();
         Serial.print("[WIFI] AP IP address: ");
         Serial.println(ip);
 
-        // Hiển thị lên LCD: dòng 1 "AP Mode Active", dòng 2 là địa chỉ IP
         updateLcd("AP Mode Active", ip.toString());
 
         Serial.println("[WIFI] Setting up web server routes...");
@@ -542,13 +534,13 @@ void enterConfigMenu() {
             switch(key) {
                 case '1':
                     runAddFingerMenu();
-                    return; // Exit config menu
+                    return;
                 case '2':
                     runDeleteFingerMenu();
-                    return; // Exit config menu
+                    return;
                 case '3':
                     runChangePasswordMenu();
-                    return; // Exit config menu
+                    return;
                 case '*':
                 case '#':
                     Serial.println("[CONFIG] Exiting config menu.");
@@ -619,7 +611,7 @@ void runChangePasswordMenu() {
                 Serial.printf("[CONFIG] Old password entered: '%s'.\n", oldPassInput.c_str());
                 if (oldPassInput == password) {
                     Serial.println("[CONFIG] Old password correct.");
-                    break; // Correct old password
+                    break;
                 } else {
                     Serial.println("[CONFIG] Wrong password! Aborting change.");
                     updateLcd("Wrong Password!", "Aborting...");
@@ -640,7 +632,6 @@ void runChangePasswordMenu() {
         }
     }
 
-    // Get new password
     Serial.println("[CONFIG] Prompting for new password.");
     updateLcd("Enter New Pass:", "");
     String newPass1 = "";
@@ -724,7 +715,6 @@ void enrollFingerprint(uint8_t id) {
     updateLcd("Place finger on", "sensor...");
     digitalWrite(GREEN_LED_PIN, HIGH);
     
-    // Wait for finger
     Serial.println("[FINGER] Waiting for finger to enroll (image 1)...");
     while (finger.getImage() != FINGERPRINT_OK);
     beep(100);
