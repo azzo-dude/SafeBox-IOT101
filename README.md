@@ -2,7 +2,8 @@
 
 This project details the construction of a secure, feature-rich SafeBox using an ESP32 microcontroller. It combines multiple layers of security, including a keypad password, a fingerprint scanner, and a web-based interface for advanced configuration. It's an excellent project for intermediate to advanced electronics hobbyists interested in IoT, security systems, and embedded programming.
 
-![til](https://media.tenor.com/bx0TiX7KlkwAAAAM/asgore-undertale.gif)
+![Asgore](https://media.tenor.com/bx0TiX7KlkwAAAAM/asgore-undertale.gif)
+![BlackHacker](https://media.tenor.com/CgGUXc-LDc4AAAAM/hacker-pc.gif)
 ![SafeBox](image/Pakalu_Papito.jpg)
 
 ## Features
