@@ -4,7 +4,6 @@ This project details the construction of a secure, feature-rich SafeBox using an
 
 ![Asgore](https://media.tenor.com/bx0TiX7KlkwAAAAM/asgore-undertale.gif)
 ![BlackHacker](https://media.tenor.com/CgGUXc-LDc4AAAAM/hacker-pc.gif)
-![SafeBox](image/Pakalu_Papito.jpg)
 
 ## Features
 
