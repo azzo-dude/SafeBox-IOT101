@@ -1,4 +1,3 @@
-
 #include <WiFi.h>
 #include <WebServer.h>
 #include <Keypad.h>
@@ -36,7 +35,7 @@ WebServer server(80);
 
 
 // =================================================================
-//                      GLOBAL VARIABLES
+//                         GLOBAL VARIABLES
 // =================================================================
 // MODIFIED: Renamed IDLE to STATE_IDLE to avoid conflict with Keypad library
 enum SystemState { STATE_IDLE, WAITING_INPUT, LOCKED_OUT, CONFIG_MENU, AP_MODE, GRANT_ACCESS_AFTER_AP };
@@ -49,7 +48,7 @@ unsigned long lockStartTime = 0;
 bool isApOn = false;
 
 // =================================================================
-//                      FUNCTION FORWARD DECLARATIONS
+//                         FUNCTION FORWARD DECLARATIONS
 // =================================================================
 // By declaring the functions here, we can call them from anywhere in the code
 // without worrying about the order they are defined in.
@@ -77,7 +76,7 @@ void enrollFingerprint(uint8_t id);
 void deleteFingerprint(uint8_t id);
 
 // =================================================================
-//                              SETUP
+//                                 SETUP
 // =================================================================
 void setup() {
     Serial.begin(115200);
@@ -141,7 +140,7 @@ void loop() {
             handleLockedOutState();
             break;
         case AP_MODE:
-            server.handleClient(); 
+            server.handleClient();  
             handleApModeKeypad();
             break;
         case CONFIG_MENU:
@@ -173,7 +172,7 @@ if (key == 'A') {
 
 }
 // =================================================================
-//                         STATE HANDLERS
+//                           STATE HANDLERS
 // =================================================================
 
 void handleIdleState() {
@@ -348,7 +347,7 @@ void handleKeypadInput(char key) {
 
 
 // =================================================================
-//                       WI-FI & WEB SERVER
+//                         WI-FI & WEB SERVER
 // =================================================================
 
 void toggleApMode() {
@@ -498,7 +497,7 @@ void handleDeleteFinger() {
 
 
 // =================================================================
-//                      CONFIGURATION MENUS
+//                       CONFIGURATION MENUS
 // =================================================================
 
 void enterConfigMenu() {
@@ -671,23 +670,23 @@ void runChangePasswordMenu() {
 int getFingerprintID() {
     int result = finger.getImage();
     if (result != FINGERPRINT_OK) {
-        Serial.println("[FP] Không nhận ảnh vân tay.");
+        // Serial.println("[FP] Failed to get fingerprint image."); // Keep this silent for idle loop
         return -1;
     }
 
     result = finger.image2Tz();
     if (result != FINGERPRINT_OK) {
-        Serial.println("[FP] Không chuyển ảnh sang mẫu.");
+        Serial.println("[FP] Failed to convert image to template.");
         return -1;
     }
 
     result = finger.fingerSearch();
     if (result != FINGERPRINT_OK) {
-        Serial.println("[FP] Không tìm thấy vân tay khớp.");
+        // Serial.println("[FP] No matching fingerprint found."); // Keep this silent for idle loop
         return -1;
     }
 
-    Serial.print("[FP] Đã xác thực! ID: ");
+    Serial.print("[FP] Authenticated! ID: ");
     Serial.println(finger.fingerID);
     return finger.fingerID;
 }
@@ -812,7 +811,7 @@ void loadPassword() {
 
 
 // =================================================================
-//                       UTILITY FUNCTIONS
+//                         UTILITY FUNCTIONS
 // =================================================================
 
 void updateLcd(String line1, String line2) {
